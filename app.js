@@ -15,3 +15,19 @@ db.connetToServer(function(err){
         console.log(`app running on port: ${port}`)
     })
 })
+
+app.get('/listings', async function(req, res){
+    const dbConn = db.getDbConn()
+    try {
+        console.log("fetching listings")
+        const listings = await dbConn
+                                    .collection('listingsAndReviews')
+                                    .find({})
+                                    .limit(50)
+                                    .toArray()
+        res.status(200).json(listings)
+    } catch (error){
+        console.error(error)
+        res.status(400)
+    }
+})
