@@ -5,9 +5,9 @@ const app = express()
 
 const port = process.env.PORT || 4000
 
-const db = require("./conn.js")
+const db = require("./db/conn.js")
 
-const router = require('./routes')
+const router = require('./routes/routes')
 
 db.connetToServer(function(err){
     if(err){

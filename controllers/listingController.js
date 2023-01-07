@@ -1,4 +1,4 @@
-const db = require ('./conn.js')
+const db = require ('../db/conn.js')
 
 exports.index = async function (_req, res){
     // res.send("success!")
