@@ -7,9 +7,13 @@ let dbConn;
 module.exports = {
     connetToServer: async function(callback){
         try{
+            console.log("connecting")
             client.connect()
-            dbConn = client.db("sample_airbnb")
-
+            dbConn = client.db("freecreate")
+            const collection = dbConn.collection("users")
+            console.log("connected")
+            const users = await collection.find({}).limit(10).toArray()
+            console.log(users)
             callback()
         }catch (err){
             callback(err)
