@@ -17,7 +17,7 @@ const db = require("./db/conn.js")
 
 const router = require('./routes/routes')
 
-db.connetToServer(function(err){
+db.connectToServer(function(err){
     if(err){
         console.error(err)
         process.exit()
