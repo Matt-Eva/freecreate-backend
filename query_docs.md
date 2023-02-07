@@ -167,7 +167,7 @@ Indexing strategy:
         - {year: -1, genre: 1, tags: 1, created_at: -1, rank: -1, }
         - {year: -1, genre: 1, tags: 1, created_at: -1, rel_rank: -1, }
 
-Limit number of search tags to 5.
+Limit number of search tags to 10.
 
 To update rank and rel_rank
     - have separate fields called rank_tracker and rel_rank tracker (non-indexed).
@@ -175,4 +175,4 @@ To update rank and rel_rank
     - Set a "needs update" field too.
     - run a daily job that queries for all pieces that "need an update", and updates their corresponding values in the database. Prevents such massive write overhead to the database.
     - Set param for the preceding day too, to make sure it only processes updates from the previous day, rather than having to process updates that may be continuing.
-    - Minimizes write-operations to indexed fields, making overall write intensity to database easier
+    - Minimizes write-operations to indexed fields, making overall write intensity to database easier.
