@@ -2,6 +2,7 @@ require('dotenv').config({path: './config.env'});
 
 const express = require('express');
 const app = express();
+const cookieSession = require('cookie-session')
 
 const corsOptions = {
     origin: "http://localhost:3000"
@@ -10,6 +11,12 @@ const corsOptions = {
 const cors = require('cors');
 
 app.use(cors(corsOptions))
+
+app.use(cookieSession({
+    name:'session',
+    keys: 'test', 
+    maxAge: 24 * 60 * 60 * 1000
+}))
 
 const port = process.env.PORT || 4000
 
