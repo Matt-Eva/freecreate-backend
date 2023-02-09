@@ -5,7 +5,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 let dbConn;
 
 module.exports = {
-    connetToServer: async function(callback){
+    connectToServer: async function(callback){
         try{
             console.log("connecting")
             client.connect()
