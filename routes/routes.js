@@ -6,13 +6,11 @@ const usersController = require("../controllers/usersController")
 
 router.get("/listings",listingController.index)
 
-router.get("/users",usersController.index)
+// === USER ROUTES ===
 
-router.get('/login', async function (req, res){
-    console.log('hit')
-    req.session.userId = 1
-    res.status(200).send('Logged In')
-})
+router.post('/users/create', usersController.create)
+
+router.get('/login', usersController.login)
 
 router.get('/authorize', usersController.authorize)
 
