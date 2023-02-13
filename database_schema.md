@@ -1,6 +1,6 @@
 # Cluster Schema
 
-## Content: Short Stories
+## Database: Short Stories
 
 ### Collection - Tag Search Content
     - Required Data
@@ -64,23 +64,7 @@
     -Indexes
         -Genre and Object_id
 
-### Collection - Creators Content
-    -Required Data
-        -thumbanil
-        -creator_id
-        -title
-        -description
-        -creator_thumbnail
-        -creator_name
-        -genre
-        -tags
-        -rank
-        -rel_rank
-        -content_id
-    -Indexes
-        -creator_id
-    -Shard Key
-        -creator_id
+### Collection - Collections (for later)
 
 ### Collection - Rank Update Docs
     -Required Data
@@ -92,7 +76,7 @@
     -Indexes
         -date
 
-## Content - Users
+## Database - Users
 
 ### Collection - User Data
     -Required Data
@@ -102,36 +86,16 @@
         -bookshelves
             -bookshelf_name
                 - array of writing_ids
+    -Index
+        -username
 
 ### Collection - User Credentials
     -Required Data
         -username
         -password
-
-## Content - Creators
-
-### Collection - Tag Creator Search
-    -Required Data
+    -Index
         -username
-        -creator_name
-        -user_id
-        -creator_thumbnail
-        -genres
-        -tags
-        -description
 
-### Collection - Text Creator Search
-    -Required Data
-        -username
-        -creator_name
-        -user_id
-        -creator_thumbnail
-        -description
-        -genres
-        -tags
-        -search_terms
-
-## Content - User's Content
 
 ### Collection - Likes
     -Required Data
@@ -175,3 +139,50 @@
         -user_id
     -Shard Key
         -user_id
+
+## Database - Creators
+
+### Collection - Tag Creator Search
+    -Required Data
+        -username
+        -creator_name
+        -user_id
+        -creator_thumbnail
+        -genres
+        -tags
+        -description
+    -Index
+        -user_id
+
+### Collection - Creators Content
+    -Required Data
+        -thumbanil
+        -creator_id
+        -title
+        -description
+        -creator_thumbnail
+        -creator_name
+        -genre
+        -tags
+        -rank
+        -rel_rank
+        -content_id
+    -Indexes
+        -creator_id
+    -Shard Key
+        -creator_id
+
+### Collection - Text Creator Search
+    -Required Data
+        -username
+        -creator_name
+        -user_id
+        -creator_thumbnail
+        -description
+        -genres
+        -tags
+        -search_terms
+    -Indexes
+        
+
+
