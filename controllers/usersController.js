@@ -21,25 +21,31 @@ exports.logout = function (req, res){
     req.session = null
 }
 
-exports.create = async function(req, res){
+exports.create = async function(req, res, next){
     console.log("creating user")
     const dbConn = db.getUserDb()
     const data = req.body
+    console.log(req.body)
     try {
         bcrypt.hash(data.password, 10, async function (err, hash){
-            const userCredentials = {
-                username: data.username,
-                password: hash
+            try {
+                const userCredentials = {
+                    username: data.username,
+                    password: hash
+                }
+                await dbConn.collection('user_credentials').insertOne(userCredentials)
+                const userData= {
+                    username: data.username,
+                    nickname: data.nickname,
+                    thumbnail: data.thumbnail,
+                }
+                const newUser = await dbConn.collection('user_data').insertOne(userData)
+                const user = await dbConn.collection('user_data').findOne({_id: newUser.insertedId})
+                res.status(201).send(user)
+            } catch (error) {
+                console.error(error)
+                res.status(422).send({error: "Could not process data"})
             }
-            await dbConn.collection('user_credentials').insertOne(userCredentials)
-            const userData= {
-                username: data.username,
-                nickname: data.nickname,
-                thumbnail: data.thumbnail,
-            }
-            const newUser = await dbConn.collection('user_data').insertOne(userData)
-            const user = await dbConn.collection('user_data').findOne({_id: newUser.insertedId})
-            res.status(201).send(user)
         })
     } catch (error){
         console.error(error)

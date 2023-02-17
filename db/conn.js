@@ -8,12 +8,8 @@ module.exports = {
     connectToServer: async function(callback){
         try{
             console.log("connecting")
-            client.connect()
-            const connection = client.db("freecreate")
-            const collection = dbConn.collection("users")
+            connection = await client.connect()
             console.log("connected")
-            const users = await collection.find({}).limit(10).toArray()
-            console.log(users)
             callback()
         }catch (err){
             callback(err)
