@@ -3,6 +3,7 @@ require('dotenv').config({path: './config.env'});
 const express = require('express');
 const app = express();
 const cookieSession = require('cookie-session')
+const bodyParser = require('body-parser')
 const port = process.env.PORT || 4000
 const db = require("./db/conn.js")
 const router = require('./routes/routes')
@@ -11,7 +12,6 @@ const corsOptions = {
     origin: "http://localhost:3000"
 }
 
-
 app.use(cors(corsOptions))
 
 app.use(cookieSession({
@@ -19,6 +19,8 @@ app.use(cookieSession({
     keys: 'test', 
     maxAge: 24 * 60 * 60 * 1000
 }))
+
+app.use(bodyParser.json())
 
 db.connectToServer(function(err){
     if(err){

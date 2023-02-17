@@ -8,7 +8,7 @@ router.get("/listings",listingController.index)
 
 // === USER ROUTES ===
 
-router.post('/users/create', usersController.create)
+router.post('/users', usersController.create)
 
 router.get('/login', usersController.login)
 
