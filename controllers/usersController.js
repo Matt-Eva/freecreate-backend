@@ -21,12 +21,11 @@ exports.logout = function (req, res){
     req.session = null
 }
 
-exports.create = async function(req, res, next){
+exports.create = async function(req, res){
     console.log("creating user")
     const dbConn = db.getUserDb()
     const data = req.body
     console.log(req.body)
-    try {
         bcrypt.hash(data.password, 10, async function (err, hash){
             try {
                 const userCredentials = {
@@ -47,8 +46,4 @@ exports.create = async function(req, res, next){
                 res.status(422).send({error: "Could not process data"})
             }
         })
-    } catch (error){
-        console.error(error)
-        res.status(422).send({error: "Could not process data"})
-    }
 }
