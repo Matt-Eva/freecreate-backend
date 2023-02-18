@@ -1,5 +1,6 @@
 const db = require('../db/conn.js')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 exports.login = function (req, res){
     console.log('hit')
@@ -8,11 +9,12 @@ exports.login = function (req, res){
 }
 
 exports.authorize = function (req, res){
-    console.log(req.session.userId)
-    if (req.session.userId) {
-        res.status(200).send("Authorized")
+    req.session.username = "hello"
+    console.log("session", req.session.username)
+    if (req.session.username) {
+        res.status(200).send({message:"Authorized"})
     } else {
-        res.status(401).send("Unauthorized")
+        res.status(401).send({message:"Unauthorized"})
     }
 }
 
@@ -40,7 +42,11 @@ exports.create = async function(req, res){
                 }
                 const newUser = await dbConn.collection('user_data').insertOne(userData)
                 const user = await dbConn.collection('user_data').findOne({_id: newUser.insertedId})
-                res.status(201).send(user)
+                console.log("user", user)
+                console.log("username", user.username)
+                req.session.username = user.username
+                console.log(req.session.username)
+                res.status(201).send(user).end(req.session.username)
             } catch (error) {
                 console.error(error)
                 res.status(422).send({error: "Could not process data"})
