@@ -10,8 +10,10 @@ router.get("/listings",listingController.index)
 
 router.post('/users', usersController.create)
 
-router.get('/login', usersController.login)
+// router.get('/login', usersController.login)
 
-router.get('/authorize', usersController.authorize)
+// router.get('/me', usersController.authorize)
+
+// router.get('/logout', usersController.logout)
 
 module.exports = router;

@@ -3,22 +3,29 @@ const bcrypt = require('bcrypt')
 
 exports.login = function (req, res){
     console.log('hit')
-    req.session.userId = 1
-    res.status(200).send({message: 'Logged In'})
+    req.session.username = "matt"
+    console.log(req.session.id)
+    res.send(req.session.id)
 }
 
 exports.authorize = function (req, res){
-    console.log(req.session.userId)
-    if (req.session.userId) {
-        res.status(200).send("Authorized")
+    console.log(req.session.id)
+    if (req.session.username) {
+        res.status(200).send({message:"Authorized"})
     } else {
-        res.status(401).send("Unauthorized")
+        res.status(401).send({message:"Unauthorized"})
     }
 }
 
 exports.logout = function (req, res){
-    console.log(req.session.userId)
-    req.session = null
+    console.log(req.session.id)
+    req.session.destroy(function(err){
+        if(err){
+            res.status(500).send({error: err})
+        }else {
+            res.send({message: "Logged out"})
+        }
+    })
 }
 
 exports.create = async function(req, res){
@@ -40,7 +47,11 @@ exports.create = async function(req, res){
                 }
                 const newUser = await dbConn.collection('user_data').insertOne(userData)
                 const user = await dbConn.collection('user_data').findOne({_id: newUser.insertedId})
-                res.status(201).send(user)
+                console.log("user", user)
+                console.log("username", user.username)
+                req.session.username = user.username
+                console.log(req.session.username)
+                res.status(201).send(user).end(req.session.username)
             } catch (error) {
                 console.error(error)
                 res.status(422).send({error: "Could not process data"})
