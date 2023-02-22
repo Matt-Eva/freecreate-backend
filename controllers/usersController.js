@@ -1,16 +1,15 @@
 const db = require('../db/conn.js')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 
 exports.login = function (req, res){
     console.log('hit')
-    req.session.userId = 1
-    res.status(200).send({message: 'Logged In'})
+    req.session.username = "matt"
+    console.log(req.session.id)
+    res.send(req.session.id)
 }
 
 exports.authorize = function (req, res){
-    req.session.username = "hello"
-    console.log("session", req.session.username)
+    console.log(req.session.id)
     if (req.session.username) {
         res.status(200).send({message:"Authorized"})
     } else {
@@ -19,8 +18,14 @@ exports.authorize = function (req, res){
 }
 
 exports.logout = function (req, res){
-    console.log(req.session.userId)
-    req.session = null
+    console.log(req.session.id)
+    req.session.destroy(function(err){
+        if(err){
+            res.status(500).send({error: err})
+        }else {
+            res.send({message: "Logged out"})
+        }
+    })
 }
 
 exports.create = async function(req, res){

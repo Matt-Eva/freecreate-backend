@@ -3,9 +3,8 @@
 ## Databases and Asset Storage
     -MongoDB
         - Store bulk of content within MongoDb - everything except images.
-    -Redis
-        -Use Redis for session handling and possibly caching if necessary.
-        -Use `ioredis` package for Node.js - detailed instructions for using it on Render.
+    -Connect Mongo
+        - Session store for Mongodb
     -Amazon S3 && Cloudfront
         -Use S3 for image storage
         -Use Cloudfront with S3 for better delivery of assets
