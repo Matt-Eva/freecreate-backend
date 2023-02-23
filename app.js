@@ -41,31 +41,31 @@ app.use(bodyParser.json())
 
 app.use(express.static('public'))
 
-app.get('/login', function(req, res){
-    req.session.userID = 1
-    console.log(req.session.id)
-    res.send({user: "I'm a user"}).end(req.session.id);
-})
+// app.get('/login', function(req, res){
+//     req.session.userID = 1
+//     console.log(req.session.id)
+//     res.send({user: "I'm a user"}).end(req.session.id);
+// })
 
-app.get('/logout', function(req,res){
-    console.log(req.session.id)
-    console.log(req.session.userID)
-    req.session.destroy(function(err){
-        if(err){
-            console.log(err)
-        }else{
-            res.send({message: `deleted ${req.session}` })
-        }
-    })
-})
+// app.get('/logout', function(req,res){
+//     console.log(req.session.id)
+//     console.log(req.session.userID)
+//     req.session.destroy(function(err){
+//         if(err){
+//             console.log(err)
+//         }else{
+//             res.send({message: `deleted ${req.session}` })
+//         }
+//     })
+// })
 
-app.get("/me", (req, res) =>{
-    if(req.session.userID){
-        res.send({message: true})
-    }else{
-        res.send({message: false})
-    }
-})
+// app.get("/me", (req, res) =>{
+//     if(req.session.userID){
+//         res.send({message: true})
+//     }else{
+//         res.send({message: false})
+//     }
+// })
 
 app.get('/', (req, res) =>{
     res.sendFile(path.join(__dirname, 'index.html'))

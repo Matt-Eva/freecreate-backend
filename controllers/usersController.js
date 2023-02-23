@@ -1,60 +1,83 @@
 const db = require('../db/conn.js')
 const bcrypt = require('bcrypt')
 
-exports.login = function (req, res){
-    console.log('hit')
-    req.session.username = "matt"
-    console.log(req.session.id)
-    res.send(req.session.id)
+exports.login = async function (req, res){
+
+    if(req.body.username === '' || req.body.password === ''){
+        return res.status(404).send({error: "You must enter both a valid username and a valid password."})
+    }
+
+    const dbConn = db.getUserDb()
+    const user = await dbConn.collection('users').findOne({username: req.body.username})
+
+    if (!user){
+        return res.status(404).send({error: "Please enter a valid username."})
+    }
+
+    bcrypt.compare(req.body.password, user.password, async function(err, result){
+        if (!err){
+            if (result) {
+                req.session.user = {
+                    username: user.username,
+                    nickname: user.nickname,
+                    thumbnail: user.thumbnail,
+                    id: user._id
+                }
+                return res.status(200).send(req.session.user).end(req.session.id)
+            } else {
+                return res.status(401).send({error: "Please enter a valid password."})
+            }
+        } else {
+            console.error("hash error", err)
+            return res.status(422).send({error: "Could not process you request."})
+        }
+    })
 }
 
 exports.authorize = function (req, res){
-    console.log(req.session.id)
-    if (req.session.username) {
-        res.status(200).send({message:"Authorized"})
+    if (req.session.user) {
+        return res.status(200).send({message:"Authorized"})
     } else {
-        res.status(401).send({message:"Unauthorized"})
+       return res.status(401).send({message:"Unauthorized"})
     }
 }
 
 exports.logout = function (req, res){
-    console.log(req.session.id)
     req.session.destroy(function(err){
         if(err){
-            res.status(500).send({error: err})
+           return res.status(500).send({error: err})
         }else {
-            res.send({message: "Logged out"})
+           return res.send({message: "Logged out"})
         }
     })
 }
 
 exports.create = async function(req, res){
-    console.log("creating user")
     const dbConn = db.getUserDb()
     const data = req.body
-    console.log(req.body)
-        bcrypt.hash(data.password, 10, async function (err, hash){
+    bcrypt.hash(data.password, 10, async function (err, hash){
+        if(!err){
             try {
-                const userCredentials = {
+                const userData = {
                     username: data.username,
-                    password: hash
-                }
-                await dbConn.collection('user_credentials').insertOne(userCredentials)
-                const userData= {
-                    username: data.username,
+                    password: hash,
                     nickname: data.nickname,
                     thumbnail: data.thumbnail,
                 }
-                const newUser = await dbConn.collection('user_data').insertOne(userData)
-                const user = await dbConn.collection('user_data').findOne({_id: newUser.insertedId})
-                console.log("user", user)
-                console.log("username", user.username)
-                req.session.username = user.username
-                console.log(req.session.username)
-                res.status(201).send(user).end(req.session.username)
+                const newUser = await dbConn.collection('users').insertOne(userData)
+                req.session.user = {
+                    username: data.username,
+                    nickname: data.nickname,
+                    thumbnail: data.thumbnail,
+                    id: newUser.insertedId
+                }
+               return res.status(201).send(req.session.user).end(req.session.id)
             } catch (error) {
-                console.error(error)
-                res.status(422).send({error: "Could not process data"})
+                return res.status(422).send({error: error})
             }
-        })
+        } else{
+            return res.status(422).send({error: "Could not process your request."})
+        }
+
+    })
 }
