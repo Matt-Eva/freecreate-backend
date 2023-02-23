@@ -44,7 +44,7 @@ app.use(express.static('public'))
 app.get('/login', function(req, res){
     req.session.userID = 1
     console.log(req.session.id)
-    res.send(req.session.id);
+    res.send({user: "I'm a user"}).end(req.session.id);
 })
 
 app.get('/logout', function(req,res){
