@@ -34,9 +34,9 @@ exports.login = async function (req, res){
     })
 }
 
-exports.authorize = function (req, res){
+exports.me = function (req, res){
     if (req.session.user) {
-        return res.status(200).send({message:"Authorized"})
+        return res.status(200).send(req.session.user)
     } else {
        return res.status(401).send({message:"Unauthorized"})
     }
