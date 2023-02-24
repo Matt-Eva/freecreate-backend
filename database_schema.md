@@ -242,7 +242,7 @@
     -Shard Key
         -creator_id
 
-### Collection - Text Creator Search
+### Collection - Text Creator Search - for later
     -Supported Queries
         - Text search by creator name and description
     -Required Data
