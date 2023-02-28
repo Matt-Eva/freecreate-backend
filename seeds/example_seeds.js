@@ -13,9 +13,10 @@ async function connectDb(){
         console.log("connecting")
         const connection = await client.connect()
         console.log("connected")
-        await createUsers(connection)
-        await createCreators(connection)
-        await createShortStories(connection)
+        // await createUsers(connection)
+        // await createCreators(connection)
+        // await createShortStories(connection)
+        await createUserPreferenceData(connection)
         logHello()
     } catch (error){
         console.error(error)
@@ -108,7 +109,7 @@ async function createShortStories(conn){
                 randomGenre = randomGenre.join("")
             }
             const views = faker.datatype.number({min: 0, max: 100})
-            const rank = views + faker.datatype.number({min: 0, max: 1000})
+            const rank = views / 100 + faker.datatype.number({min: 0, max: 1000})
             const rel_rank = rank / views
             const image = faker.image.image()
             const storyContent = {
@@ -127,7 +128,11 @@ async function createShortStories(conn){
                 rel_rank: rel_rank,
                 views: views
             }
+            
+           const newStory= await content.insertOne(storyContent)
+           console.log(newStory)
             const searchData = {
+                story_id: newStory.insertedId,
                 username: creator.username,
                 creatorName: creator.creatorName,
                 thumbnail: image,
@@ -142,9 +147,43 @@ async function createShortStories(conn){
                 rel_rank: rel_rank,
                 views: views
             }
-            await content.insertOne(storyContent)
             await search.insertOne(searchData)
             i++
+        }
+    }
+}
+
+async function createUserPreferenceData(conn){
+    const users = await conn.db('users').collection('users').find({}).toArray()
+    const stories = await conn.db('short_stories').collection('short_story_content').find({}).toArray()
+    console.log(stories.length)
+    const lib_items = conn.db('users').collection('lib_items')
+    const likes = conn.db('users').collection('likes')
+    const list_items = conn.db('users').collection('list_items')
+    await lib_items.deleteMany({})
+    await likes.deleteMany({})
+    await list_items.deleteMany({})
+    const userArray = [["lib",lib_items], ["list",list_items], ["like",likes]]
+    for (const user of users){
+        let n = 0
+        while(n<10){
+            const index = Math.floor(Math.random() * stories.length)
+            const story = stories[index]
+            const i = Math.floor(Math.random() * 3)
+            const collection = userArray[i][1]
+            const type = userArray[i][0]
+            console.log(type)
+            const newData = {
+                user_id: user._id,
+                content_id: story._id,
+                content_thumbnail: story.thumbnail,
+                content_title: story.title,
+                content_description: story.description,
+                genre: story.genre,
+                tags: story.tags
+            }
+            await collection.insertOne(newData)
+            n++
         }
     }
 }
