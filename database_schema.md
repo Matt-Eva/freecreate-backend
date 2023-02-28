@@ -34,7 +34,7 @@
     - Shard Key
         - Year & Genre
 
-### Collection - Text Search Content
+### Collection - Text Search Content (For Later)
     - Supported Queries
         - Queries for content based on title
     - Required Data
@@ -59,6 +59,8 @@
         - queries for an individual piece of content
     -Required Data
         -content
+        -username
+        -user_id
         -thumbnail
         -creator_id
         -creator_thumbnail
@@ -69,12 +71,13 @@
         -tags
         -rank
         -rel_rank
+        -views
     -Indexes
-        -Genre and Object_id
+        -creator_id and object_id
     -Shard key
-        - genre and object_id
+        -creator_id and object_id
 
-### Collection - Collection Entries
+### Collection - Collection Entries (For Later)
     -Required Data
         -content
         -thumbnail
@@ -90,7 +93,7 @@
 
 ### Collection - Collections (for later)
 
-### Collection - Rank Update Docs
+### Collection - Rank Update Docs (For Later)
     - Supported Queries
         - querying for docs by date
     -Required Data
@@ -110,22 +113,13 @@
     -Required Data
         -username
         -nickname
+        -password
         -thumbnail (optional)
     -Index
         -username
     -Shard Key
         -username
 
-### Collection - User Credentials
-    - Supported Queries
-        - Querying for a user by their username
-    -Required Data
-        -username
-        -password
-    -Index
-        -username
-    -Shard Key
-        -username
 
 
 ### Collection - Likes
