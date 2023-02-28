@@ -31,6 +31,7 @@
         - {year: -1, genre: 1, created_at: -1, rel_rank: -1, }
         - {year: -1, genre: 1, tags: 1, created_at: -1, rank: -1, }
         - {year: -1, genre: 1, tags: 1, created_at: -1, rel_rank: -1, }
+        - {year: -1, genre: 1, content_id: 1}
     - Shard Key
         - Year & Genre
 
