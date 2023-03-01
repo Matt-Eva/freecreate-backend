@@ -1,5 +1,6 @@
 // use walkthrough from here: https://www.mongodb.com/developer/products/mongodb/seed-database-with-fake-data/
-
+require('dotenv').config({path: './config.env'});
+const uri = process.env.ATLAS_URI
 const {faker} = require('@faker-js/faker')
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
