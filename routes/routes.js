@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const listingController = require("../controllers/listingController")
 const usersController = require("../controllers/usersController")
+const shortStoriesController = require("../controllers/storiesController")
 
-router.get("/listings",listingController.index)
 
 // === USER ROUTES ===
 
@@ -15,5 +14,9 @@ router.post('/login', usersController.login)
 router.get('/me', usersController.me)
 
 router.delete('/logout', usersController.logout)
+
+// === SHORT STORY ROUTES ===
+
+router.get('/stories', shortStoriesController.index)
 
 module.exports = router;
