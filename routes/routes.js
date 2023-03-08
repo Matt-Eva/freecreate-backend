@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const usersController = require("../controllers/usersController")
-const shortStoriesController = require("../controllers/storiesController")
+const shortStoriesController = require("../controllers/shortStoriesController")
 
 
 // === USER ROUTES ===
