@@ -19,4 +19,6 @@ router.delete('/logout', usersController.logout)
 
 router.get('/stories', shortStoriesController.index)
 
+router.post('/search', shortStoriesController.search)
+
 module.exports = router;

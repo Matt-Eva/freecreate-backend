@@ -10,3 +10,8 @@ exports.index = async (req, res)=>{
         return res.send({error: error})
     }
 }
+
+exports.search = async(req, res) =>{
+    console.log(req.body)
+    res.send({message: "received"})
+}
