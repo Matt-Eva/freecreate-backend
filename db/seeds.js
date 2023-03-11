@@ -14,9 +14,9 @@ async function connectDb(){
         console.log("connecting")
         const connection = await client.connect()
         console.log("connected")
-        // await createUsers(connection)
-        // await createCreators(connection)
-        // await createShortStories(connection)
+        await createUsers(connection)
+        await createCreators(connection)
+        await createShortStories(connection)
         await createUserPreferenceData(connection)
         logHello()
     } catch (error){
@@ -102,17 +102,20 @@ async function createShortStories(conn){
     const creators = await conn.db('creators').collection('creator_profile').find({}).toArray()
     for (const creator of creators){
         let i = 0;
-        while(i < 4){
+        while(i < 10){
             let randomGenre = [genreArray[Math.floor(Math.random()* 15)], genreArray[Math.floor(Math.random()* 15)]].sort()
             if (randomGenre[0] === randomGenre[1]){
                 randomGenre= randomGenre[0]
             }else {
-                randomGenre = randomGenre.join("")
+                randomGenre = randomGenre.join("-")
             }
             const views = faker.datatype.number({min: 0, max: 100})
             const rank = views / 100 + faker.datatype.number({min: 0, max: 1000})
             const rel_rank = rank / views
             const image = faker.image.image()
+            const dateRange = [0, 8.64 * 10**7, 6.05 * 10**8, 2.62 * 10**9, 3.14 * 10**10]
+            const created_at = Date.now() - dateRange[(Math.floor(Math.random() * 5))]
+            const year = (new Date()).getFullYear()
             const storyContent = {
                 content: faker.lorem.paragraphs(3),
                 username: creator.username,
@@ -127,11 +130,12 @@ async function createShortStories(conn){
                 tags: [faker.random.word(), faker.random.word(), faker.random.word(), "fun", "chill", "intense", "hot"],
                 rank: rank,
                 rel_rank: rel_rank,
-                views: views
+                views: views,
+                created_at: created_at,
+                year: year
             }
             
            const newStory= await content.insertOne(storyContent)
-           console.log(newStory)
             const searchData = {
                 story_id: newStory.insertedId,
                 username: creator.username,
@@ -146,7 +150,9 @@ async function createShortStories(conn){
                 tags: [faker.random.word().toLowerCase(), faker.random.word().toLowerCase(), faker.random.word().toLowerCase(), "fun", "chill", "intense", "hot"],
                 rank: rank,
                 rel_rank: rel_rank,
-                views: views
+                views: views,
+                created_at: created_at,
+                year: year
             }
             await search.insertOne(searchData)
             i++
