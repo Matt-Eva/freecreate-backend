@@ -34,27 +34,35 @@ exports.search = async (req, res) =>{
         if (tags.length === 0 && dateRange){
             console.log("no tag but date")
             const query = {year: year, genre: genre, created_at: {$gte: dateRange}}
-            const stories = await tagSearch.find(query).sort({rank: -1}).limit(50).toArray()
-            const stats = await tagSearch.find(query).sort({rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({stories: stories, stats: stats})
+            const rankStories = await tagSearch.find(query).sort({rank: -1}).limit(50).toArray()
+            const relRankStories = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).toArray()
+            const rankStats = await tagSearch.find(query).sort({rank: -1}).limit(50).explain("executionStats")
+            const relRankStats = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).explain("executionStats")
+           return res.status(200).send({rankStories: rankStories, relRankStores: relRankStories, rankStats: rankStats, relRankStats})
         } else if(tags.length === 0){
             console.log("no tag no date")
             const query = {year: year, genre: genre}
-            const stories = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).toArray()
-            const stats = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({stories: stories, stats: stats})
+            const rankStories = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).toArray()
+            const rankStats = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).explain("executionStats")
+            const relRankStories = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).toArray()
+            const relRankStats = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).explain("executionStats")
+           return res.status(200).send({rankStories: rankStories, relRankStories: relRankStories, relRankStats: relRankStats, rankStats: rankStats})
         } else if (dateRange){
             console.log("tag and date")
             const query = {year: year, genre: genre, tags: tags, created_at: {$gte: dateRange}}
-            const stories = await tagSearch.find(query).sort({rank: -1}).limit(50).toArray()
-            const stats = await tagSearch.find(query).sort({rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({stories: stories, stats: stats})
+            const rankStories = await tagSearch.find(query).sort({rank: -1}).limit(50).toArray()
+            const relRankStories = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).toArray()
+            const rankStats = await tagSearch.find(query).sort({rank: -1}).limit(50).explain("executionStats")
+            const relRankStats = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).explain("executionStats")
+           return res.status(200).send({rankStories: rankStories, relRankStories, rankStats: rankStats, relRankStats})
         } else {
             console.log("tag but no date")
             const query = {year: year, genre: genre, tags: tags}
-            const stories = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).toArray()
-            const stats = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({stories: stories, stats: stats})
+            const rankStories = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).toArray()
+            const relRankStories = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).toArray()
+            const rankStats = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).explain("executionStats")
+            const relRankStats = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).explain("executionStats")
+           return res.status(200).send({rankStories: rankStories, relRankStories,relRankStats, rankStats: rankStats})
         }
     } catch(error){
         console.error(error)
