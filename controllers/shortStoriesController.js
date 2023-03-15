@@ -5,8 +5,9 @@ exports.index = async (req, res)=>{
     const dbConn = db.getStoryDb()
     const storyCollection = dbConn.collection("short_story_tag_search")
     try{
-        const stories = await storyCollection.find({}).limit(50).toArray()
-        return res.status(200).send(stories)
+        const rankStories = await storyCollection.find({}).sort({rank: -1}).limit(50).toArray()
+        const relRankStories = await storyCollection.find({}).sort({rel_rank: -1}).limit(50).toArray()
+        return res.status(200).send({rankStories, relRankStories})
     } catch(error){
         return res.send({error: error})
     }
@@ -29,40 +30,32 @@ exports.search = async (req, res) =>{
     }
     const dateRange = dateObj[date]
 
-    console.log(dateRange)
     try{
         if (tags.length === 0 && dateRange){
             console.log("no tag but date")
             const query = {year: year, genre: genre, created_at: {$gte: dateRange}}
             const rankStories = await tagSearch.find(query).sort({rank: -1}).limit(50).toArray()
             const relRankStories = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).toArray()
-            const rankStats = await tagSearch.find(query).sort({rank: -1}).limit(50).explain("executionStats")
-            const relRankStats = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({rankStories: rankStories, relRankStores: relRankStories, rankStats: rankStats, relRankStats})
+           return res.status(200).send({rankStories: rankStories, relRankStories: relRankStories})
+
         } else if(tags.length === 0){
             console.log("no tag no date")
             const query = {year: year, genre: genre}
             const rankStories = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).toArray()
-            const rankStats = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).explain("executionStats")
             const relRankStories = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).toArray()
-            const relRankStats = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({rankStories: rankStories, relRankStories: relRankStories, relRankStats: relRankStats, rankStats: rankStats})
+           return res.status(200).send({rankStories: rankStories, relRankStories: relRankStories})
         } else if (dateRange){
             console.log("tag and date")
             const query = {year: year, genre: genre, tags: tags, created_at: {$gte: dateRange}}
             const rankStories = await tagSearch.find(query).sort({rank: -1}).limit(50).toArray()
             const relRankStories = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).toArray()
-            const rankStats = await tagSearch.find(query).sort({rank: -1}).limit(50).explain("executionStats")
-            const relRankStats = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({rankStories: rankStories, relRankStories, rankStats: rankStats, relRankStats})
+           return res.status(200).send({rankStories: rankStories, relRankStories})
         } else {
             console.log("tag but no date")
             const query = {year: year, genre: genre, tags: tags}
             const rankStories = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).toArray()
             const relRankStories = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).toArray()
-            const rankStats = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).explain("executionStats")
-            const relRankStats = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).explain("executionStats")
-           return res.status(200).send({rankStories: rankStories, relRankStories,relRankStats, rankStats: rankStats})
+           return res.status(200).send({rankStories: rankStories, relRankStories})
         }
     } catch(error){
         console.error(error)
