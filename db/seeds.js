@@ -77,7 +77,7 @@ async function createCreators(conn){
             const tagArray = [genreArray[i], genreArray[15-i]]
             const creator = {
                 username: user.username,
-                creatorName: faker.name.firstName(),
+                creator_name: faker.name.firstName(),
                 user_id: user._id,
                 creator_thumbnail: faker.image.avatar(),
                 tags: tagArray,
@@ -105,7 +105,7 @@ async function createShortStories(conn){
         while(i < 10){
             let randomGenre = [genreArray[Math.floor(Math.random()* 15)], genreArray[Math.floor(Math.random()* 15)]].sort()
             if (randomGenre[0] === randomGenre[1]){
-                randomGenre= randomGenre[0]
+                randomGenre = randomGenre[0]
             }else {
                 randomGenre = randomGenre.join("-")
             }
@@ -119,7 +119,7 @@ async function createShortStories(conn){
             const storyContent = {
                 content: faker.lorem.paragraphs(3),
                 username: creator.username,
-                creatorName: creator.creatorName,
+                creator_name: creator.creator_name,
                 thumbnail: image,
                 creator_id: creator._id,
                 user_id: creator.user_id,
@@ -139,7 +139,7 @@ async function createShortStories(conn){
             const searchData = {
                 story_id: newStory.insertedId,
                 username: creator.username,
-                creatorName: creator.creatorName,
+                creator_name: creator.creator_name,
                 thumbnail: image,
                 creator_id: creator._id,
                 user_id: creator.user_id,
@@ -179,7 +179,6 @@ async function createUserPreferenceData(conn){
             const i = Math.floor(Math.random() * 3)
             const collection = userArray[i][1]
             const type = userArray[i][0]
-            console.log(type)
             const newData = {
                 user_id: user._id,
                 content_id: story._id,

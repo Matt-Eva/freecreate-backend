@@ -19,6 +19,8 @@ router.delete('/logout', usersController.logout)
 
 router.get('/stories', shortStoriesController.index)
 
+router.get('/story/:username/:creator_name/:title', shortStoriesController.show)
+
 router.post('/search', shortStoriesController.search)
 
 module.exports = router;

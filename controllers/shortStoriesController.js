@@ -1,4 +1,5 @@
 const { send } = require('express/lib/response')
+const { restart } = require('nodemon')
 const db = require('../db/conn.js')
 
 exports.index = async (req, res)=>{
@@ -10,6 +11,19 @@ exports.index = async (req, res)=>{
         return res.status(200).send({rankStories, relRankStories})
     } catch(error){
         return res.send({error: error})
+    }
+}
+
+exports.show = async (req, res) =>{
+    const dbConn = db.getStoryDb()
+    const storyCollection = dbConn.collection("short_story_content")
+    const {username, creator_name, title} = req.params
+    try {
+        const story = await storyCollection.findOne({username: username, creator_name: creator_name, title: title})
+        res.status(200).send({story: story})
+    } catch (error){
+        console.error(error)
+        res.status(404).send({error: error})
     }
 }
 
