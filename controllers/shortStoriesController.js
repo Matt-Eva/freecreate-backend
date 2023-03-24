@@ -60,13 +60,14 @@ exports.search = async (req, res) =>{
            return res.status(200).send({rankStories: rankStories, relRankStories: relRankStories})
         } else if (dateRange){
             console.log("tag and date")
-            const query = {year: year, genre: genre, tags: tags, created_at: {$gte: dateRange}}
+            const query = {year: year, genre: genre, tags: {"$all": tags}, created_at: {$gte: dateRange}}
             const rankStories = await tagSearch.find(query).sort({rank: -1}).limit(50).toArray()
             const relRankStories = await tagSearch.find(query).sort({rel_rank: -1}).limit(50).toArray()
            return res.status(200).send({rankStories: rankStories, relRankStories})
         } else {
             console.log("tag but no date")
-            const query = {year: year, genre: genre, tags: tags}
+            const query = {year: year, genre: genre, tags: {"$all": tags}}
+            console.log(query)
             const rankStories = await tagSearch.find(query).sort({created_at: -1, rank: -1}).limit(50).toArray()
             const relRankStories = await tagSearch.find(query).sort({created_at: -1, rel_rank: -1}).limit(50).toArray()
            return res.status(200).send({rankStories: rankStories, relRankStories})

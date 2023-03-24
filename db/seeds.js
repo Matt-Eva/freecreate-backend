@@ -7,7 +7,10 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const bcrypt = require('bcrypt')
 port = 4000
-const genreArray = ["Romance", "Fantasy", "Action/Adventure", "Mystery", "Thriller", "Horror", "Sci-Fi", "Magical Realism", "Social Fiction", "Drama", "Comedy", "Literary Fiction", "Speculative Fiction", "Historical Fiction", "Erotica", "General Fiction"]
+const genreArray = ["Romance", "Fantasy", "Action/Adventure", "Mystery", "Thriller", "Horror", "Sci-Fi", "Magical Realism", "Social Fiction", "Drama", "Comedy", "Literary Fiction", "Speculative Fiction", "Historical Fiction", "Erotica"]
+const soloGenreArray = [...genreArray]
+soloGenreArray.push("No Genre")
+console.log(soloGenreArray)
 
 async function connectDb(){
     try{
@@ -116,6 +119,7 @@ async function createShortStories(conn){
             const dateRange = [0, 8.64 * 10**7, 6.05 * 10**8, 2.62 * 10**9, 3.14 * 10**10]
             const created_at = Date.now() - dateRange[(Math.floor(Math.random() * 5))]
             const year = (new Date()).getFullYear()
+            const title = faker.random.words()
             const storyContent = {
                 content: faker.lorem.paragraphs(3),
                 username: creator.username,
@@ -125,7 +129,7 @@ async function createShortStories(conn){
                 user_id: creator.user_id,
                 description: faker.lorem.paragraph(),
                 creator_thumbnail: creator.creator_thumbnail,
-                title: faker.random.words(), 
+                title: title, 
                 genre: randomGenre,
                 tags: [faker.random.word(), faker.random.word(), faker.random.word(), "fun", "chill", "intense", "hot"],
                 rank: rank,
@@ -145,7 +149,7 @@ async function createShortStories(conn){
                 user_id: creator.user_id,
                 description: faker.lorem.paragraph(),
                 creator_thumbnail: creator.creator_thumbnail,
-                title: faker.random.words(), 
+                title: title, 
                 genre: randomGenre,
                 tags: [faker.random.word().toLowerCase(), faker.random.word().toLowerCase(), faker.random.word().toLowerCase(), "fun", "chill", "intense", "hot"],
                 rank: rank,
@@ -156,6 +160,58 @@ async function createShortStories(conn){
             }
             await search.insertOne(searchData)
             i++
+        }
+        let d = 0;
+        while(d < 10){
+            let randomGenre = soloGenreArray[Math.floor(Math.random()* 16)]
+            const views = faker.datatype.number({min: 0, max: 100})
+            const rank = views / 100 + faker.datatype.number({min: 0, max: 1000})
+            const rel_rank = rank / views
+            const image = faker.image.image()
+            const dateRange = [0, 8.64 * 10**7, 6.05 * 10**8, 2.62 * 10**9, 3.14 * 10**10]
+            const created_at = Date.now() - dateRange[(Math.floor(Math.random() * 5))]
+            const year = (new Date()).getFullYear()
+            const title = faker.random.words()
+            const storyContent = {
+                content: faker.lorem.paragraphs(3),
+                username: creator.username,
+                creator_name: creator.creator_name,
+                thumbnail: image,
+                creator_id: creator._id,
+                user_id: creator.user_id,
+                description: faker.lorem.paragraph(),
+                creator_thumbnail: creator.creator_thumbnail,
+                title: title, 
+                genre: randomGenre,
+                tags: [faker.random.word(), faker.random.word(), faker.random.word(), "fun", "chill", "intense", "hot"],
+                rank: rank,
+                rel_rank: rel_rank,
+                views: views,
+                created_at: created_at,
+                year: year
+            }
+            
+           const newStory= await content.insertOne(storyContent)
+            const searchData = {
+                story_id: newStory.insertedId,
+                username: creator.username,
+                creator_name: creator.creator_name,
+                thumbnail: image,
+                creator_id: creator._id,
+                user_id: creator.user_id,
+                description: faker.lorem.paragraph(),
+                creator_thumbnail: creator.creator_thumbnail,
+                title: title, 
+                genre: randomGenre,
+                tags: [faker.random.word().toLowerCase(), faker.random.word().toLowerCase(), faker.random.word().toLowerCase(), "fun", "chill", "intense", "hot"],
+                rank: rank,
+                rel_rank: rel_rank,
+                views: views,
+                created_at: created_at,
+                year: year
+            }
+            await search.insertOne(searchData)
+            d++
         }
     }
 }
