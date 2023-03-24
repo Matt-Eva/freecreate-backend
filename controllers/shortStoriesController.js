@@ -14,19 +14,6 @@ exports.index = async (req, res)=>{
     }
 }
 
-exports.show = async (req, res) =>{
-    const dbConn = db.getStoryDb()
-    const storyCollection = dbConn.collection("short_story_content")
-    const {username, creator_name, title} = req.params
-    try {
-        const story = await storyCollection.findOne({username: username, creator_name: creator_name, title: title})
-        res.status(200).send({story: story})
-    } catch (error){
-        console.error(error)
-        res.status(404).send({error: error})
-    }
-}
-
 exports.search = async (req, res) =>{
     const storyDb = db.getStoryDb()
     const tagSearch = storyDb.collection('short_story_tag_search')
