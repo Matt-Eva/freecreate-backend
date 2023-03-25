@@ -1,5 +1,3 @@
-const { send } = require('express/lib/response')
-const { restart } = require('nodemon')
 const db = require('../db/conn.js')
 
 exports.index = async (req, res)=>{
@@ -12,6 +10,13 @@ exports.index = async (req, res)=>{
     } catch(error){
         return res.send({error: error})
     }
+}
+
+exports.create = async (req, res) =>{
+    console.log("hit post")
+    const dbConn = db.getStoryDb()
+    const tagCollection = dbConn.collection("short_story_tag_search")
+    const contentCollection = dbCon.collection("short_story_content")
 }
 
 exports.search = async (req, res) =>{

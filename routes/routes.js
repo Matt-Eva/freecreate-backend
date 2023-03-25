@@ -21,4 +21,6 @@ router.get('/stories', shortStoriesController.index)
 
 router.post('/search', shortStoriesController.search)
 
+router.post('/stories', shortStoriesController.create)
+
 module.exports = router;
