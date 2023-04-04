@@ -122,7 +122,7 @@ async function createShortStories(conn){
             const title = faker.random.words()
             const writing = faker.lorem.paragraphs(3)
             const storyContent = {
-                content: [{type: "p", content: writing}],
+                content: [{type: "p", content: [writing]}],
                 raw: writing,
                 stripped: [writing],
                 username: creator.username,
