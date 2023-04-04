@@ -14,9 +14,10 @@ exports.index = async (req, res)=>{
 
 exports.create = async (req, res) =>{
     console.log("hit post")
+    console.log(req.body)
     const dbConn = db.getStoryDb()
     const tagCollection = dbConn.collection("short_story_tag_search")
-    const contentCollection = dbCon.collection("short_story_content")
+    const contentCollection = dbConn.collection("short_story_content")
 }
 
 exports.search = async (req, res) =>{

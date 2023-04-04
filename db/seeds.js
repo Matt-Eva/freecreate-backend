@@ -120,8 +120,11 @@ async function createShortStories(conn){
             const created_at = Date.now() - dateRange[(Math.floor(Math.random() * 5))]
             const year = (new Date()).getFullYear()
             const title = faker.random.words()
+            const writing = faker.lorem.paragraphs(3)
             const storyContent = {
-                content: faker.lorem.paragraphs(3),
+                content: [{type: "p", content: writing}],
+                raw: writing,
+                stripped: [writing],
                 username: creator.username,
                 creator_name: creator.creator_name,
                 thumbnail: image,
