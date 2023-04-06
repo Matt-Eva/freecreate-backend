@@ -1,26 +1,26 @@
-const express = require('express')
+import express from "express"
+import {login, me, logout, signup, } from "../controllers/usersController.js"
+import  {topStories, createShortStory, searchShortStory} from "../controllers/shortStoriesController.js"
+
+
 const router = express.Router()
-
-const usersController = require("../controllers/usersController")
-const shortStoriesController = require("../controllers/shortStoriesController")
-
 
 // === USER ROUTES ===
 
-router.post('/users', usersController.create)
+router.post('/users', signup)
 
-router.post('/login', usersController.login)
+router.post('/login', login)
 
-router.get('/me', usersController.me)
+router.get('/me', me)
 
-router.delete('/logout', usersController.logout)
+router.delete('/logout', logout)
 
 // === SHORT STORY ROUTES ===
 
-router.get('/stories', shortStoriesController.index)
+router.get('/stories', topStories)
 
-router.post('/search', shortStoriesController.search)
+router.post('/search', searchShortStory)
 
-router.post('/stories', shortStoriesController.create)
+router.post('/stories', createShortStory)
 
-module.exports = router;
+export default router

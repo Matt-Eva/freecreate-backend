@@ -1,19 +1,21 @@
-require('dotenv').config({path: './config.env'});
+import dotenv from "dotenv"
+import express from "express"
+import bodyParser from "body-parser"
+import path from "path"
+import cors from "cors"
+import session from "express-session"
+import MongoStore from "connect-mongo"
+import { connectCockroach, disconnectCockroach } from "./db/cockroachConn.js"
+import router from "./routes/routes.js"
+import db from "./db/conn.js"
 
-const express = require('express');
-const bodyParser = require('body-parser')
+dotenv.config({path: './config.env'});
 const app = express();
-const port = process.env.PORT || 4000
-const db = require("./db/conn.js")
-const router = require('./routes/routes')
-const path = require('path')
-const cors = require('cors');
+const port = process.env.PORT
 const corsOptions = {
     origin: "http://localhost:3000",
     credentials: true
 }
-const session = require('express-session')
-const MongoStore = require('connect-mongo')
 const uri = process.env.ATLAS_URI
 const store = MongoStore.create({
     mongoUrl: uri,
@@ -35,7 +37,6 @@ const sess = {
 app.use(session(sess))
 
 app.use(cors(corsOptions))
-
 
 app.use(bodyParser.json())
 

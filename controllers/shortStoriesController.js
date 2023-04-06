@@ -1,6 +1,6 @@
-const db = require('../db/conn.js')
+import db from '../db/conn.js'
 
-exports.index = async (req, res)=>{
+export const topStories = async (req, res)=>{
     const dbConn = db.getStoryDb()
     const storyCollection = dbConn.collection("short_story_tag_search")
     try{
@@ -12,7 +12,7 @@ exports.index = async (req, res)=>{
     }
 }
 
-exports.create = async (req, res) =>{
+export const createShortStory = async (req, res) =>{
     console.log("hit post")
     console.log(req.body)
     const dbConn = db.getStoryDb()
@@ -20,7 +20,7 @@ exports.create = async (req, res) =>{
     const contentCollection = dbConn.collection("short_story_content")
 }
 
-exports.search = async (req, res) =>{
+export const searchShortStory = async (req, res) =>{
     const storyDb = db.getStoryDb()
     const tagSearch = storyDb.collection('short_story_tag_search')
     const tags = req.body.tags

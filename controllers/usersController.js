@@ -1,7 +1,7 @@
-const db = require('../db/conn.js')
-const bcrypt = require('bcrypt')
+import  db from'../db/conn.js'
+import bcrypt from 'bcrypt'
 
-exports.login = async function (req, res){
+export const login = async function (req, res){
     if (req.body.username === '' || req.body.password === ''){
         return res.status(404).send({error: "You must enter both a valid username and a valid password."})
     }
@@ -33,7 +33,7 @@ exports.login = async function (req, res){
     }
 }
 
-exports.me = function (req, res){
+export const me = function (req, res){
     if (req.session.user) {
         return res.status(200).send(req.session.user)
     } else {
@@ -41,7 +41,7 @@ exports.me = function (req, res){
     }
 }
 
-exports.logout = function (req, res){
+export const logout = function (req, res){
     req.session.destroy(function(err){
         if(err){
            return res.status(500).send({error: err})
@@ -51,7 +51,7 @@ exports.logout = function (req, res){
     })
 }
 
-exports.create = async function(req, res){
+export const signup = async function(req, res){
     const dbConn = db.getUserDb()
     const data = req.body
     try{

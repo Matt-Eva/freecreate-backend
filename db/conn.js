@@ -1,10 +1,12 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+import  { MongoClient, ServerApiVersion } from 'mongodb'
+import dotenv from "dotenv"
+dotenv.config({path: './config.env'});
 const uri = process.env.ATLAS_URI;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 let connection;
 
-module.exports = {
+const db = {
     connectToServer: async function(callback){
         try{
             console.log("connecting")
@@ -25,3 +27,5 @@ module.exports = {
         return connection.db('short_stories')
     }
 }
+
+export default db;
