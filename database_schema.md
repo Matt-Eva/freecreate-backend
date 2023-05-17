@@ -8,8 +8,11 @@
     - Required Data
         -rank
         -rel_rank
-        -rank_tracker (?)
-        -rel_rank_tracker (?)
+        -views
+        -likes
+        -lib_adds
+        -donations
+        -flags
         -created_at
         -year
         -needs_update (?)
@@ -216,6 +219,8 @@
         -description
         -creator_id
     -Index
+    -Shard Key
+        - 
 
 ### Collection - Creator Content
     - Supported Queries
