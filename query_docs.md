@@ -2,148 +2,148 @@
 
 ## Queries to all writing
 
--Query all writing, over all time, sorted by rank
-    -Necessary query data
-        -rank
-        -rel_rank
--Query all writing, with tags, over all time, sorted by rank
-    -Necessary query data
-        -tags
-        -rank
-        -rel_rank
--Query all writing, within a certain time frame, sorted by rank
-    -Necessary query data
-        -created_at
-        -rank
-        -rel_rank
--Query all writing, with tags, within a certain time frame, sorted by rank
-    -Necessary query data
-        -created_at
-        -tags
-        -rank
-        -rel_rank
--Query all writing, sorted by most recent, sorted by rank
-    -Necessary query data
-        -created_at
-        -rank
-        -rel_rank
--Query all writing, with tags, sorted by most recent, sorted by rank
-    -Necessary query data
-        -created_at
-        -tags
-        -rank
-        -rel_rank
+- Query all writing, over all time, sorted by rank
+    - Necessary query data
+        - rank
+        - rel_rank
+- Query all writing, with tags, over all time, sorted by rank
+    - Necessary query data
+        - tags
+        - rank
+        - rel_rank
+- Query all writing, within a certain time frame, sorted by rank
+    - Necessary query data
+        - created_at
+        - rank
+        - rel_rank
+- Query all writing, with tags, within a certain time frame, sorted by rank
+    - Necessary query data
+        - created_at
+        - tags
+        - rank
+        - rel_rank
+- Query all writing, sorted by most recent, sorted by rank
+    - Necessary query data
+        - created_at
+        - rank
+        - rel_rank
+- Query all writing, with tags, sorted by most recent, sorted by rank
+    - Necessary query data
+        - created_at
+        - tags
+        - rank
+        - rel_rank
 
 Overall query structures:
--One
-    -rank
-    -rel_rank
--Two
-    -tags
-    -rank
-    -rel_rank
--Three
-    -created_at
-    -rank
-    -rel_rank
--Four
-    -tags
-    -created_at
-    -rank
-    -rel_rank
+- One
+    - rank
+    - rel_rank
+- Two
+    - tags
+    - rank
+    - rel_rank
+- Three
+    - created_at
+    - rank
+    - rel_rank
+- Four
+    - tags
+    - created_at
+    - rank
+    - rel_rank
         
 
 ## Queries by writing type
 
 ### Over all time
--Query all writing, over all time, sorted by rank 
-    -Necessary query data
-        -Rank
-        -Rel_rank
--Query writing by genre, over all time, sorted by rank
-    -Necessary query data
-        -Genres
-        -rank
-        -rel_rank
--Query writing by tag, over all time, sorted by rank
-    -Necessary query data
-        -tags
-        -rank
-        -rel_rank
--Query writing by genre and tag, over all time, sorted by rank
-    -necessary query data
-        -genres
-        -tags
-        -rank
-        -rel_rank
+- Query all writing, over all time, sorted by rank 
+    - Necessary query data
+        - Rank
+        - Rel_rank
+- Query writing by genre, over all time, sorted by rank
+    - Necessary query data
+        - Genres
+        - rank
+        - rel_rank
+- Query writing by tag, over all time, sorted by rank
+    - Necessary query data
+        - tags
+        - rank
+        - rel_rank
+- Query writing by genre and tag, over all time, sorted by rank
+    - necessary query data
+        - genres
+        - tags
+        - rank
+        - rel_rank
 
 ### Within a certain time period
--Query all writing, within a certain time period, sorted by rank
-    -Necessary query data
-        -Rank
-        -Created_at
-        -Rel_rank
--Query specific genres, within a certain time period, sorted by rank
-    -Necessary query data
-        -Genres
-        -created_at
-        -rank
-        -rel_rank
--Query all writing, with tags, within a certain time period, sorted by rank
-    -Necessary query data
-        -tags
-        -created_at
-        -rank
-        -rel_rank
--Query with both genres and tags, within a certain time period, sorted by rank
+- Query all writing, within a certain time period, sorted by rank
+    - Necessary query data
+        - Rank
+        - Created_at
+        - Rel_rank
+- Query specific genres, within a certain time period, sorted by rank
+    - Necessary query data
+        - Genres
+        - created_at
+        - rank
+        - rel_rank
+- Query all writing, with tags, within a certain time period, sorted by rank
+    - Necessary query data
+        - tags
+        - created_at
+        - rank
+        - rel_rank
+- Query with both genres and tags, within a certain time period, sorted by rank
 
 ### Most recently posted
--Query most recent writing, sorted by creation_date, then sorted by rank
-    -Necessary query data
-        -created_at
-        -rank
-        -rel_rank
--Query most recent writing, with tags, sorted by creation_date, sorted by rank
-    -Necesary query data
-        -tags
-        -created_at
-        -rank
-        -rel_rank
--Query most recent writing, with genres, sorted by creation_date, sorted by rank
--Query most recent writing, with genres and tags, sorted by creation_date, sorted by rank
+- Query most recent writing, sorted by creation_date, then sorted by rank
+    - Necessary query data
+        - created_at
+        - rank
+        - rel_rank
+- Query most recent writing, with tags, sorted by creation_date, sorted by rank
+    - Necesary query data
+        - tags
+        - created_at
+        - rank
+        - rel_rank
+- Query most recent writing, with genres, sorted by creation_date, sorted by rank
+- Query most recent writing, with genres and tags, sorted by creation_date, sorted by rank
 
 Query Structures
--One
-    -rank
-    -rel_rank
--Two
-    -genres
-    -rank
-    -rel_rank
+- One
+    - rank
+    - rel_rank
+- Two
+    - genres
+    - rank
+    - rel_rank
 -
-    -tags
-    -rank
-    -rel_rank
--Three
-    -genres
-    -tags
-    -rank
-    -rel_rank
--Four
-    -created_at
-    -rank
-    -rel_rank
--Five
-    -genres
-    -created_at
-    -rank
-    -rel_rank
--Six
-    -genres
-    -tags
-    -created_at
-    -rank
-    -rel_rank
+    - tags
+    - rank
+    - rel_rank
+- Three
+    - genres
+    - tags
+    - rank
+    - rel_rank
+- Four
+    - created_at
+    - rank
+    - rel_rank
+- Five
+    - genres
+    - created_at
+    - rank
+    - rel_rank
+- Six
+    - genres
+    - tags
+    - created_at
+    - rank
+    - rel_rank
 
 Workaround - require people to input genre when searching. shard key on genre (when necessary).
     - genre is composed of all the genres the author wants to include. For example, a genre of Fantasy and Romance would have the genre FantasyRomance. Genre filters to Fantasy or to Romance will not return results for the FantasyRomance genre.
