@@ -1,6 +1,6 @@
-const {ErrorHandler} = require("./error-handler.js")
+const {ModelValidator} = require("./model_validator.js")
 
-class ShortStoryContent extends ErrorHandler {
+class ShortStoryContent extends ModelValidator {
     constructor(data){
         const urlId = `${data.username}/${data.creatorname}/${data.title}`
 

@@ -1,7 +1,7 @@
 const { ShortStoryContent } = require("../models/shortStoryContent")
 const { ShortStoryTagSearch } = require("../models/shortStoryTagSearch")
 
-async function postShortStory(req, res, next){
+async function postShortStory(data){
     console.log("hit post")
     console.log(req.body)
     const dbConn = db.getStoryDb()

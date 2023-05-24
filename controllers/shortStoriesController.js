@@ -14,7 +14,11 @@ exports.index = async (req, res)=>{
 }
 
 exports.create = async (req, res) =>{
-
+    try {
+        postShortStory(req.body)
+    } catch(error){
+        
+    }
 }
 
 exports.search = async (req, res) =>{

@@ -1,6 +1,6 @@
-class ErrorHandler{
+class ModelValidator{
     constructor(){
-        this.errors = []
+        this.errors = {status: 422, errors: []}
     }
 
     checkErrors(){
@@ -19,5 +19,5 @@ class ErrorHandler{
 }
 
 module.exports = {
-    ErrorHandler
+    ModelValidator
 }

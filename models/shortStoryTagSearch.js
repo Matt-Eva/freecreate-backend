@@ -1,6 +1,6 @@
-const {ErrorHandler} = require("./error-handler.js")
+const {ModelValidator} = require("./model_validator.js")
 
-class ShortStoryTagSearch extends ErrorHandler{
+class ShortStoryTagSearch extends ModelValidator{
 
     constructor(data){
         this.errors = []
