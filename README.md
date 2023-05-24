@@ -1,5 +1,10 @@
 # freecreate-menn-backend
 
+## MVP
+
+- No payment
+- No image storage
+
 ## Indexes
 
 Indexes on writing:

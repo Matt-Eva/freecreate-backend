@@ -73,10 +73,12 @@
         -rank
         -rel_rank
         -views
+        -url_id: username + creatorname + title
     -Indexes
-        -creator_id and object_id
+        -url_id
     -Shard key
-        -creator_id and object_id
+        -url_id
+    url_id is unique index
 
 ### Collection - Collection Entries (For Later)
     -Required Data
@@ -112,7 +114,7 @@
     -Supported Queries
         - Querying for a user by their username
     -Required Data
-        -username
+        -username (unique)
         -nickname
         -password
         -thumbnail (optional)
@@ -120,6 +122,7 @@
         -username
     -Shard Key
         -username
+    - Note: MongoDb supports unique indexes on shard keys.
 
 
 
