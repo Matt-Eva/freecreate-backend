@@ -8,12 +8,10 @@
     - Required Data
         -rank
         -rel_rank
-        -rank_tracker (?)
-        -rel_rank_tracker (?)
         -created_at
         -year
         -needs_update (?)
-        -content_id
+        -url_id
         -thumbnail
         -creator_id
         -creator_name
@@ -60,11 +58,10 @@
         -url_id
     url_id is unique index
 
-### Collection - Creator Short Stories
+### Collection - Creator Content
     - Supported Queries
         - Queries from creators for stories they've written.
         - Used for editing as well as analytics.
-
 
 ## Database - Users
 
@@ -102,7 +99,7 @@
     -Supported Queries
         -Querying for lib_items by user_id
     -Required Data
-        -user_id
+        -username
         -content_id
         -content_thumbnail
         -content_title
@@ -130,21 +127,30 @@
     -Shard Key
         -user_id
 
+## Database - Flags
+
+### Collection - User Flags
+    - A user can look up the flags they've created
+
+### Collection - Creator Flags
+    - Flags for specific creators can be looked up
+
 ## Database - Donations
 
 ### Collection - Creator Donations
-    Collects donation information to be accessed by creators
-    Shard key on username
+    - Collects donation information to be accessed by creators
+    - Shard key on user_id
+    - Can also be used to query for donations for specific pieces of content
 
 ### Collection - User Donations
     Collects donation information to be accessed by a user
-    Shard key on username
+    Shard key on user_id
 
 ## Database - Creators
 
 ### Collection - Creator Profile
     - Supported Queries
-        - query for creators by username
+        - query for creators by user_id
     - Required Data
         - username
         - creator_name
@@ -155,41 +161,9 @@
         - description
         - search_terms
     - Indexes
-        - username
+        - user_id
     - Shard Key
-        - username
-
-### Collection - Tag Creator Search - for later
-    -Supported Queries
-        - Query for creators by tags and genres (all same array)
-    -Required Data
-        -username
-        -creator_name
-        -user_id
-        -creator_thumbnail
-        -genres
-        -tags
-        -description
-        -creator_id
-    -Index
-
-### Collection - Text Creator Search - for later
-    -Supported Queries
-        - Text search by creator name and description
-    -Required Data
-        -username
-        -creator_name
-        -user_id
-        -creator_thumbnail
-        -description
-        -genres
-        -tags
-        -search_terms
-        -creator_id
-    -Indexes
-        -creator name, description, search_terms
-    -Shard Key
-        -creator name
+        - user_id
         
 
 
