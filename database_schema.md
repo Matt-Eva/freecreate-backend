@@ -35,26 +35,6 @@
     - Shard Key
         - Year & Genre
 
-### Collection - Text Search Content (For Later)
-    - Supported Queries
-        - Queries for content based on title
-    - Required Data
-        - title
-        - description
-        - thumbnail
-        - creator_thumbnail
-        - creator_id
-        - creator_name
-        - content_id
-        - rank
-        - rel_rank
-        - genre
-        - search terms
-    - Indexes
-        - title and description text index
-    - Shard Key
-        - title
-
 ### Collection - Content
     -Supported Queries
         - queries for an individual piece of content
@@ -80,33 +60,11 @@
         -url_id
     url_id is unique index
 
-### Collection - Collection Entries (For Later)
-    -Required Data
-        -content
-        -thumbnail
-        -creator_id
-        -creator_thumbnail
-        -creator_name
-        -title
-        -description
-        -genre
-        -tags
-        -rank
-        -rel_rank
-
-### Collection - Collections (for later)
-
-### Collection - Rank Update Docs (For Later)
+### Collection - Creator Short Stories
     - Supported Queries
-        - querying for docs by date
-    -Required Data
-        -date
-        -text_search_content_id
-        -tag_search_content_id
-        -rank
-        -rel_rank
-    -Indexes
-        -date
+        - Queries from creators for stories they've written.
+        - Used for editing as well as analytics.
+
 
 ## Database - Users
 
@@ -123,8 +81,6 @@
     -Shard Key
         -username
     - Note: MongoDb supports unique indexes on shard keys.
-
-
 
 ### Collection - Likes
     -Supported Queries
@@ -174,18 +130,15 @@
     -Shard Key
         -user_id
 
-### Collection - Donations
-    -Supported Queries
-        -Querying for donations by user_id
-    -Required Data
-        -user_id
-        -username
-        -amount
-        -creator_id
-        -creator_name
-    -Shard key
-        -user_id
+## Database - Donations
 
+### Collection - Creator Donations
+    Collects donation information to be accessed by creators
+    Shard key on username
+
+### Collection - User Donations
+    Collects donation information to be accessed by a user
+    Shard key on username
 
 ## Database - Creators
 
@@ -219,26 +172,6 @@
         -description
         -creator_id
     -Index
-
-### Collection - Creator Content
-    - Supported Queries
-        - search for content by creator_id
-    -Required Data
-        -thumbanil
-        -creator_id
-        -title
-        -description
-        -creator_thumbnail
-        -creator_name
-        -genre
-        -tags
-        -rank
-        -rel_rank
-        -content_id
-    -Indexes
-        -creator_id
-    -Shard Key
-        -creator_id
 
 ### Collection - Text Creator Search - for later
     -Supported Queries
