@@ -8,12 +8,10 @@
     - Required Data
         -rank
         -rel_rank
-        -rank_tracker (?)
-        -rel_rank_tracker (?)
         -created_at
         -year
         -needs_update (?)
-        -content_id
+        -url_id
         -thumbnail
         -creator_id
         -creator_name
@@ -35,26 +33,6 @@
     - Shard Key
         - Year & Genre
 
-### Collection - Text Search Content (For Later)
-    - Supported Queries
-        - Queries for content based on title
-    - Required Data
-        - title
-        - description
-        - thumbnail
-        - creator_thumbnail
-        - creator_id
-        - creator_name
-        - content_id
-        - rank
-        - rel_rank
-        - genre
-        - search terms
-    - Indexes
-        - title and description text index
-    - Shard Key
-        - title
-
 ### Collection - Content
     -Supported Queries
         - queries for an individual piece of content
@@ -73,38 +51,12 @@
         -rank
         -rel_rank
         -views
+        -url_id: username + creatorname + title
     -Indexes
-        -creator_id and object_id
+        -url_id
     -Shard key
-        -creator_id and object_id
-
-### Collection - Collection Entries (For Later)
-    -Required Data
-        -content
-        -thumbnail
-        -creator_id
-        -creator_thumbnail
-        -creator_name
-        -title
-        -description
-        -genre
-        -tags
-        -rank
-        -rel_rank
-
-### Collection - Collections (for later)
-
-### Collection - Rank Update Docs (For Later)
-    - Supported Queries
-        - querying for docs by date
-    -Required Data
-        -date
-        -text_search_content_id
-        -tag_search_content_id
-        -rank
-        -rel_rank
-    -Indexes
-        -date
+        -url_id
+    url_id is unique index
 
 ## Database - Users
 
@@ -112,7 +64,7 @@
     -Supported Queries
         - Querying for a user by their username
     -Required Data
-        -username
+        -username (unique)
         -nickname
         -password
         -thumbnail (optional)
@@ -120,8 +72,7 @@
         -username
     -Shard Key
         -username
-
-
+    - Note: MongoDb supports unique indexes on shard keys.
 
 ### Collection - Likes
     -Supported Queries
@@ -143,7 +94,7 @@
     -Supported Queries
         -Querying for lib_items by user_id
     -Required Data
-        -user_id
+        -username
         -content_id
         -content_thumbnail
         -content_title
@@ -171,24 +122,30 @@
     -Shard Key
         -user_id
 
-### Collection - Donations
-    -Supported Queries
-        -Querying for donations by user_id
-    -Required Data
-        -user_id
-        -username
-        -amount
-        -creator_id
-        -creator_name
-    -Shard key
-        -user_id
+## Database - Flags
 
+### Collection - User Flags
+    - A user can look up the flags they've created
+
+### Collection - Creator Flags
+    - Flags for specific creators can be looked up
+
+## Database - Donations
+
+### Collection - Creator Donations
+    - Collects donation information to be accessed by creators
+    - Shard key on user_id
+    - Can also be used to query for donations for specific pieces of content
+
+### Collection - User Donations
+    Collects donation information to be accessed by a user
+    Shard key on user_id
 
 ## Database - Creators
 
 ### Collection - Creator Profile
     - Supported Queries
-        - query for creators by username
+        - query for creators by user_id
     - Required Data
         - username
         - creator_name
@@ -198,62 +155,11 @@
         - tags
         - description
         - search_terms
+        - creations - embedded data on all a creator's creations.
     - Indexes
-        - username
+        - user_id
     - Shard Key
-        - username
-
-### Collection - Tag Creator Search - for later
-    -Supported Queries
-        - Query for creators by tags and genres (all same array)
-    -Required Data
-        -username
-        -creator_name
-        -user_id
-        -creator_thumbnail
-        -genres
-        -tags
-        -description
-        -creator_id
-    -Index
-
-### Collection - Creator Content
-    - Supported Queries
-        - search for content by creator_id
-    -Required Data
-        -thumbanil
-        -creator_id
-        -title
-        -description
-        -creator_thumbnail
-        -creator_name
-        -genre
-        -tags
-        -rank
-        -rel_rank
-        -content_id
-    -Indexes
-        -creator_id
-    -Shard Key
-        -creator_id
-
-### Collection - Text Creator Search - for later
-    -Supported Queries
-        - Text search by creator name and description
-    -Required Data
-        -username
-        -creator_name
-        -user_id
-        -creator_thumbnail
-        -description
-        -genres
-        -tags
-        -search_terms
-        -creator_id
-    -Indexes
-        -creator name, description, search_terms
-    -Shard Key
-        -creator name
+        - user_id
         
 
 

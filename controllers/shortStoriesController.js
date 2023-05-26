@@ -1,4 +1,5 @@
-const db = require('../db/conn.js')
+const db = require('../config/conn.js')
+const {postShortStory} = require("../queries/postShortStory")
 
 exports.index = async (req, res)=>{
     const dbConn = db.getStoryDb()
@@ -13,11 +14,11 @@ exports.index = async (req, res)=>{
 }
 
 exports.create = async (req, res) =>{
-    console.log("hit post")
-    console.log(req.body)
-    const dbConn = db.getStoryDb()
-    const tagCollection = dbConn.collection("short_story_tag_search")
-    const contentCollection = dbConn.collection("short_story_content")
+    try {
+        postShortStory(req.body)
+    } catch(error){
+        
+    }
 }
 
 exports.search = async (req, res) =>{

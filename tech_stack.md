@@ -23,10 +23,7 @@
     - Express
         - Use express for the time being as the backend API framework
         - Lightweight, good for microservices, and works well with MongoDB
-        - Better performance than Rails / Python and more easily customizable
         - Simplifies tech stack into a single language, making it easier to develop fullstack
-        - Eventual goal is to potentially switch to Rust
-            - Rust driver for MongoDB currently not supported very well
 ## Deploying
     - MongoDB Atlas
         - Use MongoDB's cloud hosted storage solution for data storage

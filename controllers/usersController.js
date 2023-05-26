@@ -1,4 +1,4 @@
-const db = require('../db/conn.js')
+const db = require('../config/conn.js')
 const bcrypt = require('bcrypt')
 
 exports.login = async function (req, res){
