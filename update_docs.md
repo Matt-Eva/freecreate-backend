@@ -2,6 +2,10 @@
 
 These documents specify what collections / resources need to be updated when a certain resource is updated.
 
+Shard key constraints may necessitate asynchronous updates to certain resources.
+
+# Creator Info
+
 ## Creator Profile Pic
     - Short Stories
       - Tag Search Content
@@ -11,6 +15,18 @@ These documents specify what collections / resources need to be updated when a c
       - User Donations
     - Creators
       - Creator Profile
+
+## Creator Name
+    - Short Stories
+      - Tag Search Content
+      - Content
+      - Creator Content
+    - Donations
+      - User Donations
+    - Creators
+      - Creator Profile
+
+# Content Info
 
 ## Content Title
     - Short Stories
@@ -29,10 +45,11 @@ These documents specify what collections / resources need to be updated when a c
 
 ## Tags
 
+## Rank and Rel_Rank - Views, Likes, LibAdds, List Adds, Donations, Flags
+
 ## Content Description
 
-## Creator Name
+# User Info
 
 ## User Name
 
-## Rank and Rel_Rank - Views, Likes, LibAdds, List Adds, Donations, Flags

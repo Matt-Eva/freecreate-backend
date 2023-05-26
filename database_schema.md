@@ -58,11 +58,6 @@
         -url_id
     url_id is unique index
 
-### Collection - Creator Content
-    - Supported Queries
-        - Queries from creators for stories they've written.
-        - Used for editing as well as analytics.
-
 ## Database - Users
 
 ### Collection - User Data
@@ -160,6 +155,7 @@
         - tags
         - description
         - search_terms
+        - creations - embedded data on all a creator's creations.
     - Indexes
         - user_id
     - Shard Key
